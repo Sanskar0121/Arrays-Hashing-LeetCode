@@ -1,0 +1,88 @@
+CODE :
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        seen = set() 
+        for num in nums:
+            if num in seen:
+                return True
+            seen.add(num) 
+        return False 
+
+EXPLANATION : 
+🧠 Goal of the Code:
+Check whether the list nums contains any duplicate elements.
+
+📦 Full Code:
+python
+Copy
+Edit
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        seen = set()
+        for num in nums:
+            if num in seen:
+                return True
+            seen.add(num)
+        return False
+🔍 Explanation:
+1. class Solution:
+Defines a class named Solution. This is just a container for organizing the function—common in coding platforms like LeetCode.
+
+2. def containsDuplicate(self, nums: List[int]) -> bool:
+This defines a method called containsDuplicate:
+
+self: Refers to the object of the class.
+
+nums: List[int]: nums is the list of integers to check. (You need to import List from typing)
+
+-> bool: This method returns a True or False.
+
+🔧 Don't forget to add this if you're using type hints:
+
+python
+Copy
+Edit
+from typing import List
+3. seen = set()
+Creates an empty set called seen.
+
+A set stores only unique values.
+
+It’s super fast to check if something exists in a set (unlike a list).
+
+4. for num in nums:
+Start a loop. Go through each number in the list nums.
+
+5. if num in seen:
+Check if this number is already in the seen set.
+
+If yes → this number is a duplicate → return True.
+
+6. seen.add(num)
+If the number is not in the set, add it to the set for future checking.
+
+7. return False
+If the loop finishes and no duplicate was found, return False.
+
+✅ Example:
+python
+Copy
+Edit
+nums = [1, 2, 3, 4, 1]
+Here’s what happens:
+
+1 → not in seen → add it
+
+2 → not in seen → add it
+
+3 → not in seen → add it
+
+4 → not in seen → add it
+
+1 → already in seen → return True
+
+🧮 Time and Space:
+
+Type	Complexity
+⏱️ Time	O(n) → because we look at each number once
+🧠 Space	O(n) → because in worst case, we store all unique numbers in the set 
