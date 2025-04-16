@@ -1,0 +1,107 @@
+CODE : 
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        prevMap = {} 
+
+        for i, n in enumerate(nums):
+            diff = target - n
+            if diff in prevMap:
+                return [prevMap[diff], i] 
+            prevMap[n] = i 
+
+EXPLANATION : 
+
+✅ Problem Statement:
+Given:
+
+A list of integers nums
+
+A target integer target
+
+Goal:
+Find two indices in the list such that the numbers at those indices add up to the target.
+
+✅ Code:
+python
+Copy
+Edit
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        prevMap = {}  # stores number as key and its index as value
+
+        for i, n in enumerate(nums):
+            diff = target - n
+            if diff in prevMap:
+                return [prevMap[diff], i] 
+            prevMap[n] = i 
+🔍 Step-by-Step Explanation:
+1️⃣ Initialize Dictionary:
+python
+Copy
+Edit
+prevMap = {}
+This dictionary stores:
+
+Key = number already seen
+
+Value = index of that number
+
+2️⃣ Loop through the list:
+python
+Copy
+Edit
+for i, n in enumerate(nums):
+i = current index
+
+n = current number at index i
+
+3️⃣ Calculate Difference:
+python
+Copy
+Edit
+diff = target - n
+You need to find another number such that:
+
+n + other = target
+
+So, other = target - n = diff
+
+4️⃣ Check if that “other number” (i.e., diff) is already seen:
+python
+Copy
+Edit
+if diff in prevMap:
+    return [prevMap[diff], i]
+If yes, return the index of diff (which was stored earlier) and the current index i.
+
+5️⃣ Store the current number and its index:
+python
+Copy
+Edit
+prevMap[n] = i
+If the diff is not found, save the current number and its index in the dictionary for future lookup.
+
+🧠 Example:
+python
+Copy
+Edit
+nums = [2, 7, 11, 15]
+target = 9
+Loop steps:
+
+i = 0, n = 2
+→ diff = 9 - 2 = 7
+→ 7 not in prevMap
+→ store 2:0 → prevMap = {2: 0}
+
+i = 1, n = 7
+→ diff = 9 - 7 = 2
+→ 2 is in prevMap → found!
+→ return [prevMap[2], 1] = [0, 1]
+
+✅ Output: [0, 1]
+
+⏱️ Time and Space Complexity:
+Time Complexity: O(n) – one pass through the list.
+
+Space Complexity: O(n) – for the dictionary.
