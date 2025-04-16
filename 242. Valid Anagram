@@ -1,0 +1,278 @@
+CODE 1  :
+USING SORTING 
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+            
+        return sorted(s) == sorted(t)
+
+EXPLANATION :
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+A class named Solution is defined.
+
+Inside it, a method isAnagram is declared. It takes two string parameters s and t.
+
+The function returns a boolean (True or False), indicating whether the two strings are anagrams.
+
+What is an Anagram?
+Two strings are anagrams if:
+
+They have the same characters,
+
+With the same frequency,
+
+But possibly in a different order.
+
+Example:
+
+"listen" and "silent" are anagrams.
+
+"hello" and "world" are not.
+
+python
+Copy
+Edit
+        if len(s) != len(t):
+            return False
+First, the code checks if the lengths of the two strings are different.
+
+If the lengths are not equal, they cannot be anagrams, so it returns False.
+
+python
+Copy
+Edit
+        return sorted(s) == sorted(t)
+This line sorts both strings alphabetically.
+
+sorted(s) returns a list of characters in s, sorted in order.
+
+sorted(t) does the same for t.
+
+If the sorted lists are equal, it means both strings contain the same characters with the same frequency.
+
+So, the function returns True.
+
+Example:
+python
+Copy
+Edit
+s = "anagram"
+t = "nagaram"
+
+sorted(s) => ['a', 'a', 'a', 'g', 'm', 'n', 'r']
+sorted(t) => ['a', 'a', 'a', 'g', 'm', 'n', 'r']
+
+=> Equal => Return True 
+
+CODE 2:
+USING HASH MAP 
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        countS, countT = {}, {}
+
+        for i in range(len(s)):
+            countS[s[i]] = 1 + countS.get(s[i], 0)
+            countT[t[i]] = 1 + countT.get(t[i], 0)
+        return countS == countT
+
+EXPLANATION : 
+💡 Purpose:
+This function checks if two strings s and t are anagrams by comparing the frequency of characters in each string.
+
+🔍 Step-by-Step Explanation:
+1️⃣ Length Check:
+python
+Copy
+Edit
+if len(s) != len(t):
+    return False
+If the lengths are different, they can't be anagrams.
+
+So, return False immediately.
+
+2️⃣ Initialize Two Dictionaries:
+python
+Copy
+Edit
+countS, countT = {}, {}
+countS will store frequency of characters in string s.
+
+countT will store frequency of characters in string t.
+
+3️⃣ Count Character Frequencies:
+python
+Copy
+Edit
+for i in range(len(s)):
+    countS[s[i]] = 1 + countS.get(s[i], 0)
+    countT[t[i]] = 1 + countT.get(t[i], 0)
+This loop runs through each character position in the strings.
+
+s[i] is a character from string s.
+
+t[i] is a character from string t.
+
+Explanation of this line:
+python
+Copy
+Edit
+countS[s[i]] = 1 + countS.get(s[i], 0)
+countS.get(s[i], 0) means:
+"If s[i] is already in the dictionary, get its value;
+otherwise return 0."
+
+Then add 1 to it and store it back.
+
+This effectively counts how many times each character appears in s.
+
+Same logic applies to t[i] and countT.
+
+4️⃣ Compare Dictionaries:
+python
+Copy
+Edit
+return countS == countT
+Finally, we compare the two dictionaries.
+
+If both dictionaries are equal, it means both strings have the same characters with the same frequency, i.e., they are anagrams.
+
+Otherwise, they are not.
+
+✅ Example:
+Let’s say:
+
+python
+Copy
+Edit
+s = "anagram"
+t = "nagaram"
+After the loop:
+
+python
+Copy
+Edit
+countS = {'a': 3, 'n': 1, 'g': 1, 'r': 1, 'm': 1}
+countT = {'n': 1, 'a': 3, 'g': 1, 'r': 1, 'm': 1}
+Since both are equal → return True
+
+CODE 3 :
+USING HASH TABLE (USING ARRAY) 
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        count = [0] * 26
+        for i in range(len(s)):
+            count[ord(s[i]) - ord('a')] += 1
+            count[ord(t[i]) - ord('a')] -= 1
+
+        for val in count:
+            if val != 0:
+                return False
+        return True
+EXPLANATION : 
+
+💡 Goal:
+Check if two strings s and t are anagrams, i.e., they contain the same characters with the same frequency.
+
+🔍 Step-by-step Explanation:
+1️⃣ Length Check:
+python
+Copy
+Edit
+if len(s) != len(t):
+    return False
+If the lengths are different, they can't be anagrams.
+
+2️⃣ Create a Frequency Array:
+python
+Copy
+Edit
+count = [0] * 26
+This creates a list of size 26 (for each letter of the alphabet a to z), initialized to 0.
+
+Each index represents a character:
+
+Index 0 → 'a'
+
+Index 1 → 'b'
+
+...
+
+Index 25 → 'z'
+
+3️⃣ Loop Through the Strings:
+python
+Copy
+Edit
+for i in range(len(s)):
+    count[ord(s[i]) - ord('a')] += 1
+    count[ord(t[i]) - ord('a')] -= 1
+Let's break down this line:
+python
+Copy
+Edit
+ord(s[i]) - ord('a')
+ord() converts a character to its ASCII code.
+
+'a' has an ASCII value of 97.
+
+So ord('b') - ord('a') = 98 - 97 = 1 → index 1
+
+✅ This maps each character to an index from 0 to 25.
+
+What happens:
+For each character in s, we increment its count.
+
+For each character in t, we decrement its count.
+
+➡️ If both strings are anagrams, increases and decreases will cancel out, and the final count will be all zeros.
+
+4️⃣ Final Check:
+python
+Copy
+Edit
+for val in count:
+    if val != 0:
+        return False
+If any value in the count array is not zero, it means the strings had different character counts → return False.
+
+✅ If all values are zero:
+python
+Copy
+Edit
+return True
+This means both strings are perfect anagrams.
+
+🔥 Example:
+python
+Copy
+Edit
+s = "anagram"
+t = "nagaram"
+Loop will do:
+
++1 for each character in s
+
+-1 for each character in t
+
+Final count → all zeros → ✅ Anagram → Return True
+
+📌 Why this version is fast:
+No dictionary or sorting
+
+Just one array and simple arithmetic
+
+Time complexity: O(n)
+
+Space complexity: O(1) (since array size is always 26) 
