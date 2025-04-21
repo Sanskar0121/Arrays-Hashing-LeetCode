@@ -1,0 +1,153 @@
+CODE : 
+
+🔍 Goal:
+Given a list of strings, group all anagrams together.
+
+💡 What is an Anagram?
+Two words are anagrams if they contain the same characters with the same frequency, but possibly in a different order.
+Example: "eat", "tea", and "ate" are all anagrams of each other.
+
+📘 Step-by-Step Explanation:
+Line 1:
+python
+Copy
+Edit
+res = defaultdict(list)
+res is a dictionary where each key maps to a list.
+
+If a key doesn't exist, it automatically creates an empty list for that key.
+
+Purpose: To group all anagrams under the same key.
+
+Loop over all strings:
+python
+Copy
+Edit
+for s in strs:
+For each string s, initialize a count of 26 zeros:
+python
+Copy
+Edit
+count = [0] * 26
+Represents character counts for all 26 lowercase letters.
+
+Index 0 for 'a', index 1 for 'b', ..., index 25 for 'z'.
+
+Count each character:
+python
+Copy
+Edit
+for c in s:
+    count[ord(c) - ord('a')] += 1 
+ord(c) gives the ASCII value of character c.
+
+ord(c) - ord('a') gives the position of c in the alphabet (e.g., 'a' → 0, 'b' → 1).
+
+This increases the count for that character.
+
+📌 Example:
+If s = "tea", the count list might look like:
+[1, 0, 0, 0, 1, ..., 0, 1, ..., 0]
+This means: 1 'a', 1 'e', and 1 't'.
+
+Use the count list as a key:
+python
+Copy
+Edit
+res[tuple(count)].append(s)
+tuple(count) is used as a key (because lists can’t be dictionary keys, but tuples can).
+
+All anagrams will have the same character frequency and hence the same tuple key.
+
+So all anagrams will be grouped in the same list.
+
+Finally, return the result:
+python
+Copy
+Edit
+return list(res.values())
+Returns a list of all grouped anagrams.
+
+✅ Example:
+python
+Copy
+Edit
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"]
+Output: [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]]
+
+EXPLAINATION :
+
+🔍 Goal:
+Given a list of strings, group all anagrams together.
+
+💡 What is an Anagram?
+Two words are anagrams if they contain the same characters with the same frequency, but possibly in a different order.
+Example: "eat", "tea", and "ate" are all anagrams of each other.
+
+📘 Step-by-Step Explanation:
+Line 1:
+python
+Copy
+Edit
+res = defaultdict(list)
+res is a dictionary where each key maps to a list.
+
+If a key doesn't exist, it automatically creates an empty list for that key.
+
+Purpose: To group all anagrams under the same key.
+
+Loop over all strings:
+python
+Copy
+Edit
+for s in strs:
+For each string s, initialize a count of 26 zeros:
+python
+Copy
+Edit
+count = [0] * 26
+Represents character counts for all 26 lowercase letters.
+
+Index 0 for 'a', index 1 for 'b', ..., index 25 for 'z'.
+
+Count each character:
+python
+Copy
+Edit
+for c in s:
+    count[ord(c) - ord('a')] += 1 
+ord(c) gives the ASCII value of character c.
+
+ord(c) - ord('a') gives the position of c in the alphabet (e.g., 'a' → 0, 'b' → 1).
+
+This increases the count for that character.
+
+📌 Example:
+If s = "tea", the count list might look like:
+[1, 0, 0, 0, 1, ..., 0, 1, ..., 0]
+This means: 1 'a', 1 'e', and 1 't'.
+
+Use the count list as a key:
+python
+Copy
+Edit
+res[tuple(count)].append(s)
+tuple(count) is used as a key (because lists can’t be dictionary keys, but tuples can).
+
+All anagrams will have the same character frequency and hence the same tuple key.
+
+So all anagrams will be grouped in the same list.
+
+Finally, return the result:
+python
+Copy
+Edit
+return list(res.values())
+Returns a list of all grouped anagrams.
+
+✅ Example:
+python
+Copy
+Edit
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"]
+Output: [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]] 
