@@ -1,0 +1,109 @@
+CODE :
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        res = [1] * (len(nums))
+        
+        prefix = 1 
+        for i in range(len(nums)):
+            res[i] = prefix
+            prefix *= nums[i] 
+
+        postfix = 1
+        for i in range(len(nums) -1, -1, -1):
+            res[i] *= postfix
+            postfix *= nums[i] 
+            
+        return res  
+
+EXPLANATION : 
+✅ Problem Example
+Given:
+
+python
+Copy
+Edit
+nums = [1, 2, 3, 4]
+Expected output:
+
+python
+Copy
+Edit
+[24, 12, 8, 6]
+Explanation:
+
+24 = 2×3×4
+
+12 = 1×3×4
+
+8 = 1×2×4
+
+6 = 1×2×3
+
+🧠 Code Breakdown
+python
+Copy
+Edit
+res = [1] * (len(nums))
+Creates a result list res initialized with 1s.
+
+This will store our final answer.
+
+🔁 First loop: Calculating Prefix Products
+python
+Copy
+Edit
+prefix = 1 
+for i in range(len(nums)):
+    res[i] = prefix
+    prefix *= nums[i]
+This loop builds the prefix product — the product of all elements to the left of index i.
+
+prefix starts at 1 (since there’s nothing on the left of the first element).
+
+At each step:
+
+res[i] is set to prefix (product of elements before i)
+
+Then, update prefix by multiplying it with nums[i] for next iteration
+
+After this loop, res holds prefix products:
+For nums = [1, 2, 3, 4], res becomes:
+
+python
+Copy
+Edit
+[1, 1, 2, 6]  # prefix values for each index
+🔁 Second loop: Calculating Postfix Products (Right to Left)
+python
+Copy
+Edit
+postfix = 1
+for i in range(len(nums) -1, -1, -1):
+    res[i] *= postfix
+    postfix *= nums[i]
+Now we multiply the prefix values in res with postfix products (product of all elements to the right of i)
+
+postfix starts at 1
+
+We go backwards through the array:
+
+Multiply current res[i] with postfix
+
+Update postfix by multiplying with nums[i]
+
+After this loop, res becomes:
+
+python
+Copy
+Edit
+[24, 12, 8, 6]  # final answer
+✅ Why It Works
+This approach:
+
+Uses two passes:
+
+Forward pass to calculate products to the left
+
+Backward pass to calculate products to the right
+
+Achieves O(n) time and O(1) extra space (excluding the output array)
