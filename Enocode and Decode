@@ -1,0 +1,130 @@
+class Solution:
+    
+    def encode(self, strs: List[str]) -> str:
+        res = ""
+        for s in strs:
+            res += str(len(s)) + "#" + s
+        return res
+
+    def decode(self, s: str) -> List[str]:
+        res = []
+        i = 0
+        
+        while i < len(s):
+            j = i
+            while s[j] != '#':
+                j += 1
+            length = int(s[i:j])
+            i = j + 1
+            j = i + length
+            res.append(s[i:j])
+            i = j
+            
+        return res
+
+EXPLANATION : 
+Problem
+You are given a list of strings (List[str]). Your job is to:
+
+Encode this list into a single string.
+
+Decode that single string back into the original list.
+
+Code Walkthrough
+### encode(self, strs: List[str]) -> str
+This method converts a list of strings into a single string.
+
+python
+Copy code
+res = ""
+for s in strs:
+    res += str(len(s)) + "#" + s
+return res
+Step-by-step:
+Initialize an empty string res.
+
+For each string s in the list:
+
+Get its length: len(s)
+
+Convert the length to string: str(len(s))
+
+Add a # symbol as a delimiter.
+
+Append the actual string s.
+
+Example:
+
+python
+Copy code
+strs = ["cat", "dog"]
+→ "3#cat3#dog"
+Why it works:
+You always know where a string ends by looking at the number before the #.
+
+The # clearly separates the number from the string.
+
+### decode(self, s: str) -> List[str]
+This method converts the encoded string back to the original list of strings.
+
+python
+Copy code
+res = []
+i = 0
+while i < len(s):
+    j = i
+    while s[j] != '#':
+        j += 1
+    length = int(s[i:j])     # get the length of the next string
+    i = j + 1                # move past the '#'
+    j = i + length           # get the end index of the string
+    res.append(s[i:j])       # extract and append the string
+    i = j                    # move to the next block
+return res
+Step-by-step:
+Start at index i = 0.
+
+Use j to find the next #. Everything between i and j is a number representing the length of the next string.
+
+Convert that substring to an integer → length.
+
+Skip the # symbol → i = j + 1
+
+Now take the substring of size length → this is one full string.
+
+Append it to the result list.
+
+Move i to the end of the current string and repeat.
+
+Example Dry Run:
+python
+Copy code
+Input: s = "3#cat3#dog"
+First Iteration:
+i = 0, find # at j = 1
+
+s[0:1] = "3" → length = 3
+
+Move past #: i = 2
+
+Extract string s[2:5] = "cat" → add to result
+
+Move i = 5
+
+Second Iteration:
+i = 5, find # at j = 6
+
+s[5:6] = "3" → length = 3
+
+Move past #: i = 7
+
+Extract string s[7:10] = "dog" → add to result
+
+Move i = 10
+
+Final result: ["cat", "dog"]
+
+Advantages:
+Handles any characters inside strings (even #) because length is used, not delimiters.
+
+Simple, fast, and works for all edge cases (including empty strings).
