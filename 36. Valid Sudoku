@@ -1,0 +1,110 @@
+CODE : 
+        class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        cols = defaultdict(set)
+        rows = defaultdict(set)
+        squares = defaultdict(set)  
+
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] == ".":
+                    continue
+                if ( board[r][c] in rows[r]
+                    or board[r][c] in cols[c]
+                    or board[r][c] in squares[(r // 3, c // 3)]):
+                    return False
+
+                cols[c].add(board[r][c])
+                rows[r].add(board[r][c])
+                squares[(r // 3, c // 3)].add(board[r][c])
+
+        return True 
+
+EXPLANATION : 
+A Sudoku board is valid if:
+
+Each row contains the digits 1-9 without repetition.
+
+Each column contains the digits 1-9 without repetition.
+
+Each of the nine 3x3 sub-boxes contains the digits 1-9 without repetition.
+
+Code Explanation:
+python
+Copy
+Edit
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+This defines a class Solution with a method isValidSudoku.
+
+board is expected to be a 9x9 list of lists, where each element is either a digit "1" to "9" or "." (representing an empty cell).
+
+python
+Copy
+Edit
+        cols = defaultdict(set)
+        rows = defaultdict(set)
+        squares = defaultdict(set)
+These are dictionaries where:
+
+cols[c] will store all numbers seen in column c.
+
+rows[r] will store all numbers seen in row r.
+
+squares[(r//3, c//3)] will store all numbers seen in the 3x3 square (or box) that the cell (r, c) belongs to.
+
+r//3 and c//3 help identify which 3x3 sub-box the cell belongs to. There are 9 boxes in total indexed as (0,0) to (2,2).
+
+python
+Copy
+Edit
+        for r in range(9):
+            for c in range(9):
+Loops through all 81 cells of the board, row by row and column by column.
+
+python
+Copy
+Edit
+                if board[r][c] == ".":
+                    continue
+If the current cell is empty ("."), skip to the next cell.
+
+python
+Copy
+Edit
+                if ( board[r][c] in rows[r]
+                    or board[r][c] in cols[c]
+                    or board[r][c] in squares[(r // 3, c // 3)]):
+                    return False
+If the current value already exists in:
+
+The same row,
+
+The same column, or
+
+The same 3x3 box,
+
+Then it's a duplicate, which means the Sudoku board is invalid → return False.
+
+python
+Copy
+Edit
+                cols[c].add(board[r][c])
+                rows[r].add(board[r][c])
+                squares[(r // 3, c // 3)].add(board[r][c])
+Otherwise, add the number to:
+
+The current row's set,
+
+The current column's set, and
+
+The corresponding square's set.
+
+python
+Copy
+Edit
+        return True
+If the loop completes without finding any duplicates, the board is valid.
+
+Summary
+The code checks for duplicates in rows, columns, and 3x3 sub-boxes using sets for fast lookups. If any duplicate is found, it returns False, otherwise, True.
